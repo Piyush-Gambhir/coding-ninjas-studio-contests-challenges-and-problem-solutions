@@ -1,19 +1,20 @@
-import java.util.*;
+import java.util.Stack;
 
 public class Solution {
-
-    public static int[] nextGreater(int[] arr, int n) {
+    public static int[] nextGreaterElement(int[] arr, int n) {
         int[] ans = new int[n];
-        Stack<Integer> stack = new Stack<>();
-
+        Stack<Integer> s = new Stack<Integer>();
         for (int i = n - 1; i >= 0; i--) {
-            while (!stack.isEmpty() && stack.peek() <= arr[i]) {
-                stack.pop();
+            while (!s.empty() && arr[i] >= s.peek()) {
+                s.pop();
             }
-            ans[i] = stack.isEmpty() ? -1 : stack.peek();
-            stack.push(arr[i]);
+            if (!s.empty()) {
+                ans[i] = s.peek();
+            } else {
+                ans[i] = -1;
+            }
+            s.push(arr[i]);
         }
-
         return ans;
     }
 }
