@@ -1,34 +1,31 @@
-import java.util.*;
+/*
+Problem statement
+You are given an array 'A' of length 'N', which contains the score of the students. The principal will be going through the scores of these students and will become happy if the score of a student is higher than the score of the previous student.
 
+
+
+Your task is to rearrange the scores of the students in array 'A' such that the number of times the principal becomes happy is maximized.
+
+
+
+Return the maximum number of times the principal will become happy provided you arrange the array 'A' optimally.
+
+
+
+Hint:
+A strictly increasing array would maximize the principal's happiness.
+How can you rearrange an array with duplicates?
+For Example:-
+Let 'N' = 5, 'A' = [2, 1, 5, 3, 4].
+You can rearrange 'A' as [1, 2, 3, 4, 5].
+The principal becomes happy at indexes 2, 3, 4, and 5 (1-based indexing).
+So the answer is 4.
+*/
+
+import java.util.* ;
+import java.io.*; 
 public class Solution {
     static int happyPrincipal(int[] a) {
-        Arrays.sort(a);
-        int n = a.length;
-        int happyCount = 0;
-
-        // Create a new array to hold the optimal arrangement
-        int[] b = new int[n];
-
-        // Use two pointers to arrange elements
-        int left = 0;
-        int right = (n + 1) / 2;
-
-        // Place elements from the sorted array into the new array alternately
-        for (int i = 0; i < n; i++) {
-            if (i % 2 == 0) {
-                b[i] = a[left++];
-            } else {
-                b[i] = a[right++];
-            }
-        }
-
-        // Calculate the number of happy moments
-        for (int i = 1; i < n; i++) {
-            if (b[i] > b[i - 1]) {
-                happyCount++;
-            }
-        }
-
-        return happyCount;
+        // Write your code here.
     }
 }
