@@ -9,13 +9,16 @@ public class Solution {
             elements.add(s.pop());
         }
 
-        Collections.reverse(elements);
 
         for (int i = 0; i < n; i += k) {
             int end = Math.min(i + k, n);
+            if (end - i < k) {
+                break;
+            }
             Collections.reverse(elements.subList(i, end));
         }
 
+        Collections.reverse(elements);
         for (int element : elements) {
             s.push(element);
         }
