@@ -1,3 +1,4 @@
+
 /*
 Problem statement
 Once upon a time, there was a group of ‘N’ Ninjas who loved to play games together. They had an array ‘A’ of ‘N’ non-negative integers, representing the scores they had achieved in various games. They were a competitive bunch and wanted to find a way to increase their total score as much as possible.
@@ -17,9 +18,32 @@ Output: 2
 For this test case, we can set bit 1 of the last two array elements using 2 operations. The updated array will be [2, 3, 3] the AND of all array elements will be 2. It can be proved that this is the maximum AND value we can obtain.
 */
 
-public class Solution {
-    static int maxScore(int n, int k, int[] a) {
-        // Write your code here.
+import java.util.Scanner;
 
+public class Solution {
+    public static int maxScore(int n, int k, int[] a) {
+        int result = 0;
+
+        for (int bit = 30; bit >= 0; bit--) {
+            int bitMask = 1 << bit;
+            int count = 0;
+
+            for (int num : a) {
+                if ((num & bitMask) == 0) {
+                    count++;
+                }
+            }
+
+            if (count <= k) {
+                k -= count;
+                result |= bitMask;
+
+                for (int i = 0; i < n; i++) {
+                    a[i] |= bitMask;
+                }
+            }
+        }
+
+        return result;
     }
 }

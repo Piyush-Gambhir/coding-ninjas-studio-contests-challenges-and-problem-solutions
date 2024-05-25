@@ -54,6 +54,7 @@ Sample Output 2 :
 public class Solution {
 
     static long minOperations(int n, int[] a) {
-        
+        // Write your code here.
+
     }
 }

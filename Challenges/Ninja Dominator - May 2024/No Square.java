@@ -12,7 +12,24 @@ Our answer is 3.
 
 public class Solution {
     static int noSquare(int m, int[] a) {
-        // Write your code here.
+        boolean[] dp = new boolean[m + 1];
+        dp[0] = true;
 
+        for (int i = 0; i < a.length; i++) {
+            for (int j = m; j >= a[i]; j--) {
+                if (dp[j - a[i]]) {
+                    dp[j] = true;
+                }
+            }
+        }
+
+        int count = 0;
+        for (int i = 1; i * i <= m; i++) {
+            if (!dp[i * i]) {
+                count++;
+            }
+        }
+
+        return count;
     }
 }

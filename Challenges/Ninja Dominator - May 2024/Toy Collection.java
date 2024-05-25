@@ -21,40 +21,10 @@ He cannot use the second offer as it requires four toys, but only two remain. So
 Finally, he will have to pay '2 + 9 = 11' rupees.
 */
 
-import java.util.*;
-import java.io.*;
-
+import java.util.* ;
+import java.io.*; 
 public class Solution {
-    static long minimumPrice(int[] p, int[] x, int[] y) {
-        int N = p.length;
-        long[] dp = new long[N + 1];
-        long[] prefixSum = new long[N + 1];
-
-        // Calculate prefix sums
-        for (int i = 1; i <= N; i++) {
-            prefixSum[i] = prefixSum[i - 1] + p[i - 1];
-        }
-
-        Arrays.fill(dp, Long.MAX_VALUE); // Initialize dp array with large values
-        dp[0] = 0; // No cost to purchase 0 toys
-
-        for (int i = 1; i <= N; i++) {
-            // Buy the ith toy without any offer
-            dp[i] = dp[i - 1] + p[i - 1];
-
-            // Check all possible offers
-            for (int k = 0; k < x.length; k++) {
-                int len = x[k]; // Length of toys that the offer applies to
-                int disc = y[k]; // Discount for the offer
-
-                if (i >= len) { // Check if the offer can be applied
-                    int start = i - len;
-                    long costWithOffer = prefixSum[i] - prefixSum[start] - disc; // Total cost using the offer
-                    dp[i] = Math.min(dp[i], dp[start] + costWithOffer);
-                }
-            }
-        }
-
-        return dp[N]; // Minimum cost to buy all toys with the optimal use of offers
+    static long minimumPrice(int[]p, int[] x, int[] y) {
+        // Write your code here.
     }
 }

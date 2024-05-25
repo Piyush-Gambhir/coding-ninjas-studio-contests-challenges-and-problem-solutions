@@ -1,3 +1,14 @@
+/*
+Problem statement
+You are given an array 'A' of length 'N' and 'Q' queries. Each query is denoted by two integers, 'L', and 'R'. The answer to a query is A[L]+('A[L]'^'A[L+1]')+('A[L]'^'A[L+1]'^'A[L+2]')+...+('A[L]'^'A[L+1]'^'A[R]').
+
+Return the answer to each query.
+
+For Example:-
+Let 'N' = 4, 'Q' = 2,  'A' = [1, 7, 2, 6], and query = [[3, 4], [1, 3]].
+A[3]+(A[3]^A[4]) = 6.
+A[1]+(A[1]^A[2])+(A[1]^A[2]^A[3]) = 11.
+*/
 public class Solution {
     public static long[] answer(int n, int q, int[] a, int[][] queries) {
         int[] xorPrefix = new int[n + 1];

@@ -7,28 +7,41 @@ For example:
 
 Let’s say ‘A’ = [2, 1, 1, 2, 3, 1, 4, 3]. If we select ‘x’ = 1 and add all the ‘1’ in front then the updated array ‘A’ = [1, 1, 1, 2, 2, 3, 4, 3]. If we select ‘x’ = 4 and add all the ‘4’ in end then the updated array ‘A’ = [1, 1, 1, 2, 2, 3, 3, 4]. Hence the array become sorted in two operations.
  */
+
 import java.util.*;
 
 public class Solution {
     public static int sortArray(int N, int[] A) {
-        // Step 1: Find the length of the longest sorted prefix
-        int longestSortedPrefixLength = 1;
-        for (int i = 1; i < N; i++) {
-            if (A[i] >= A[i - 1]) {
-                longestSortedPrefixLength++;
-            } else {
-                break;
+        // Create a TreeMap to store the frequency of each number
+        TreeMap<Integer, Integer> map = new TreeMap<>();
+
+        // Count the frequency of each number
+        for (int num : A) {
+            map.put(num, map.getOrDefault(num, 0) + 1);
+        }
+
+        // Create a PriorityQueue to store the numbers in descending order of frequency
+        PriorityQueue<Integer> pq = new PriorityQueue<>((a, b) -> map.get(b) - map.get(a));
+        pq.addAll(map.keySet());
+
+        // Sort the array
+        int i = 0;
+        while (!pq.isEmpty()) {
+            int num = pq.poll();
+            int count = map.get(num);
+
+            // Place the number in the array
+            for (int j = 0; j < count; j++) {
+                A[i++] = num;
+            }
+
+            // If the frequency becomes 0, remove the number from the map
+            if (count == 0) {
+                map.remove(num);
             }
         }
 
-        // Step 2: Collect the rest of the elements after the longest sorted prefix
-        Set<Integer> uniqueElements = new HashSet<>();
-        for (int i = longestSortedPrefixLength; i < N; i++) {
-            uniqueElements.add(A[i]);
-        }
-
-        // Step 3: The number of operations needed is equal to the size of the set of
-        // unique elements
-        return uniqueElements.size();
+        // Return the number of operations (which is the size of the PriorityQueue)
+        return pq.size();
     }
-}
+} 
