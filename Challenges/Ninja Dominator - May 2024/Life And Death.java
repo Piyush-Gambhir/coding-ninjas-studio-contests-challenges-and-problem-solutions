@@ -19,8 +19,40 @@ For the maximum, Taking bitwise XOR with 'A = 0' does not change the elements th
 Thus, the maximum is '3 * Y + 4 * X = 38' and the minimum is '2 * X = 4'.
 */
 
+/*
+    Time Complexity: O(N * log(max(V)))
+    Space Complexity: O(1)
+
+    where 'N' is the length of the array 'V' and 'max(V)' is the maximum element of 'V'.
+*/
+
 public class Solution {
+
+    static long maximize(int p, int x) {
+        long cnt = 0;
+        while (p > 0) {
+            p /= 2;
+            cnt++;
+        }
+        return cnt * x;
+    }
+
+    static long minimize(int p, int x) {
+        long cnt = 0;
+        while ((p & 1) > 0) {
+            p /= 2;
+            cnt++;
+        }
+        return cnt * x;
+    }
+
     static long[] lifeAndDeath(int n, int[] v, int a, int x, int y) {
-        // Write your code here.
+        long[] ans = new long[2];
+        for (int i = 0; i < n; i++) {
+            ans[0] += maximize(v[i], x);
+            ans[1] += Math.min(minimize(v[i], x), y + minimize(v[i] ^ a, x));
+        }
+        ans[0] += (y + maximize(a, x)) * n;
+        return ans;
     }
 }

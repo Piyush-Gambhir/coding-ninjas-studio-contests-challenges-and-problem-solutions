@@ -12,36 +12,6 @@ import java.util.*;
 
 public class Solution {
     public static int sortArray(int N, int[] A) {
-        // Create a TreeMap to store the frequency of each number
-        TreeMap<Integer, Integer> map = new TreeMap<>();
-
-        // Count the frequency of each number
-        for (int num : A) {
-            map.put(num, map.getOrDefault(num, 0) + 1);
-        }
-
-        // Create a PriorityQueue to store the numbers in descending order of frequency
-        PriorityQueue<Integer> pq = new PriorityQueue<>((a, b) -> map.get(b) - map.get(a));
-        pq.addAll(map.keySet());
-
-        // Sort the array
-        int i = 0;
-        while (!pq.isEmpty()) {
-            int num = pq.poll();
-            int count = map.get(num);
-
-            // Place the number in the array
-            for (int j = 0; j < count; j++) {
-                A[i++] = num;
-            }
-
-            // If the frequency becomes 0, remove the number from the map
-            if (count == 0) {
-                map.remove(num);
-            }
-        }
-
-        // Return the number of operations (which is the size of the PriorityQueue)
-        return pq.size();
+      
     }
 } 

@@ -51,10 +51,21 @@ Sample Output 2 :
 0
 */
 
+import java.util.*;
+
 public class Solution {
+    static long minOperations(int n, int[] arr) {
+        Arrays.sort(arr);
+        int expectedVal = 1;
+        long totalOperations = 0;
 
-    static long minOperations(int n, int[] a) {
-        // Write your code here.
+        for (int currentVal : arr) {
+            if (currentVal >= expectedVal) {
+                totalOperations += currentVal - expectedVal;
+                expectedVal++;
+            }
+        }
 
+        return totalOperations;
     }
 }

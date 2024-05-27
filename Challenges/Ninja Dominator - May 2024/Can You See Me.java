@@ -13,7 +13,28 @@ Therefore, only 4 pairs of people can see each other.
 
 public class Solution {
     public static int countPairs(int n, int[] arr) {
-        // Write your code here.
-    }
+        int count = 0;
 
+        for (int L = 0; L < n; L++) {
+            for (int R = L + 1; R < n; R++) {
+                if (R == L + 1) {
+                    // Condition 1: They are adjacent
+                    count++;
+                } else {
+                    // Condition 2: Check max height between L and R-1
+                    int maxBetween = Integer.MIN_VALUE;
+                    for (int k = L + 1; k < R; k++) {
+                        if (arr[k] > maxBetween) {
+                            maxBetween = arr[k];
+                        }
+                    }
+                    if (maxBetween < Math.min(arr[L], arr[R])) {
+                        count++;
+                    }
+                }
+            }
+        }
+
+        return count;
+    }
 }

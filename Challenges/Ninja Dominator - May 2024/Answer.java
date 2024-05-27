@@ -9,6 +9,7 @@ Let 'N' = 4, 'Q' = 2,  'A' = [1, 7, 2, 6], and query = [[3, 4], [1, 3]].
 A[3]+(A[3]^A[4]) = 6.
 A[1]+(A[1]^A[2])+(A[1]^A[2]^A[3]) = 11.
 */
+
 public class Solution {
     public static long[] answer(int n, int q, int[] a, int[][] queries) {
         int[] xorPrefix = new int[n + 1];
@@ -22,11 +23,11 @@ public class Solution {
             int L = queries[k][0] - 1;
             int R = queries[k][1] - 1;
             long result = 0;
-            int currentXor = 0;
+
             for (int i = L; i <= R; i++) {
-                currentXor ^= a[i];
-                result += currentXor;
+                result += xorPrefix[i + 1] ^ xorPrefix[L];
             }
+
             results[k] = result;
         }
 

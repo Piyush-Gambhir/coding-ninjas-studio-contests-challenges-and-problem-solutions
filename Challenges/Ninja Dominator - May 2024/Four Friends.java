@@ -21,11 +21,71 @@ Hence Ninja wins the game.
 */
 
 import java.util.*;
-import java.io.*;
 
 public class Solution {
     static String fourFriends(String s) {
-        // Write your code here.
-         
+        int N = s.length();
+        int rounds = N / 4;
+        int[][] scores = new int[4][4]; // scores[position][player]
+
+        for (int startPos = 0; startPos < 4; startPos++) {
+            String remainingString = s;
+            for (int i = 0; i < rounds; i++) {
+                for (int player = 0; player < 4; player++) {
+                    int pickStart = player * 4;
+                    if (pickStart >= remainingString.length()) {
+                        break;
+                    }
+                    String picked = remainingString.substring(pickStart, pickStart + 4);
+                    scores[startPos][player] += countOnes(picked);
+                }
+                if (remainingString.length() > 16) {
+                    remainingString = remainingString.substring(16);
+                } else {
+                    remainingString = "";
+                }
+            }
+        }
+
+        int maxNinjaPoints = -1;
+        int bestPosition = -1;
+        boolean tie = false;
+
+        for (int startPos = 0; startPos < 4; startPos++) {
+            int ninjaPoints = scores[startPos][startPos];
+            boolean isMax = true;
+            for (int player = 0; player < 4; player++) {
+                if (player != startPos && scores[startPos][player] > ninjaPoints) {
+                    isMax = false;
+                    break;
+                }
+            }
+            if (isMax) {
+                if (ninjaPoints > maxNinjaPoints) {
+                    maxNinjaPoints = ninjaPoints;
+                    bestPosition = startPos;
+                    tie = false;
+                } else if (ninjaPoints == maxNinjaPoints) {
+                    tie = true;
+                }
+            }
+        }
+
+        if (tie || bestPosition == -1) {
+            return "NO";
+        } else {
+            return "YES " + (bestPosition + 1);
+        }
     }
+
+    static int countOnes(String s) {
+        int count = 0;
+        for (char c : s.toCharArray()) {
+            if (c == '1') {
+                count++;
+            }
+        }
+        return count;
+    }
+
 }

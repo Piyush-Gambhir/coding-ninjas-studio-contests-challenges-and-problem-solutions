@@ -17,21 +17,19 @@ House 3 on the left side has the same colour as house 2 on the right side.
 The answer is {3, 1, 2}.
 */
 
-import java.util.*;
-import java.io.*;
-
 public class Solution {
-    public static int[] findTwinHouses(int a[], int b[], int n) {
-        // Write your code here.
-        int[] result = new int[n];
+    public static int[] findTwinHouses(int[] a, int[] b, int n) {
+        int[] colorPosition = new int[n];
+        int[] twinPositions = new int[n];
+
         for (int i = 0; i < n; i++) {
-            for (int j = 0; j < n; j++) {
-                if (a[i] == b[j]) {
-                    result[i] = j + 1;
-                    break;
-                }
-            }
+            colorPosition[b[i] - 1] = i;
         }
-        return result;
+
+        for (int i = 0; i < n; i++) {
+            twinPositions[i] = colorPosition[a[i] - 1] + 1;
+        }
+
+        return twinPositions;
     }
 }

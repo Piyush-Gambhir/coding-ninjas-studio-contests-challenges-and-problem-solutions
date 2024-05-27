@@ -1,3 +1,4 @@
+
 /*
 Problem statement
 There are 'N' basketball players, where 'ith' players have height 'H[i]'. There is an array of pairs' A' where a pair ('X', 'Y') (where 'X' and 'Y' are not the same) denotes that player 'X' has won against 'Y' in a match.
@@ -23,12 +24,65 @@ So, we will print 2.
 */
 
 import java.util.*;
-import java.io.*;
 
 public class Solution {
 
-    static int maxSequenceVal(int h[], int a[][], int n, int m) {
-        // Write your code here.
+    static final int MAX_HEIGHT = 10;
 
+    static int maxSequenceVal(int heights[], int edges[][], int numNodes, int numEdges) {
+        List<List<Integer>> adjacencyList = new ArrayList<>(numNodes + 1);
+        for (int i = 0; i <= numNodes; i++) {
+            adjacencyList.add(new ArrayList<>());
+        }
+
+        int[] inDegree = new int[numNodes + 1];
+        int[][] dp = new int[numNodes + 1][MAX_HEIGHT + 1];
+
+        for (int[] edge : edges) {
+            int from = edge[0], to = edge[1];
+            adjacencyList.get(from).add(to);
+            inDegree[to]++;
+        }
+
+        Queue<Integer> queue = new ArrayDeque<>();
+
+        for (int i = 1; i <= numNodes; i++) {
+            if (inDegree[i] == 0) {
+                queue.add(i);
+                dp[i][heights[i - 1]]++;
+            }
+        }
+
+        int processedNodes = 0;
+
+        while (!queue.isEmpty()) {
+            int currentNode = queue.poll();
+            processedNodes++;
+
+            for (int nextNode : adjacencyList.get(currentNode)) {
+                for (int j = 1; j <= MAX_HEIGHT; j++) {
+                    dp[nextNode][j] = Math.max(dp[nextNode][j], dp[currentNode][j]);
+                }
+                inDegree[nextNode]--;
+
+                if (inDegree[nextNode] == 0) {
+                    queue.add(nextNode);
+                    dp[nextNode][heights[nextNode - 1]]++;
+                }
+            }
+        }
+
+        if (processedNodes < numNodes) {
+            return -1;
+        }
+
+        int maxSequenceValue = 0;
+        for (int i = 1; i <= numNodes; i++) {
+            for (int j = 1; j <= MAX_HEIGHT; j++) {
+                maxSequenceValue = Math.max(maxSequenceValue, dp[i][j]);
+            }
+        }
+
+        return maxSequenceValue;
     }
 }
